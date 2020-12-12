@@ -14,8 +14,16 @@ func main() {
 	}
 	rows, err := db.Query("")
 	for rows.Next() {
-		var info map[string]interface{}
+		var info interface{}
 		rows.Scan(&info)
-		log.Println(info)
+		switch info.(type) {
+		case []interface{}:
+			for _, v := range info.([]interface{}) {
+				log.Println("info:", v)
+			}
+		default:
+			log.Println("unkonw")
+		}
+
 	}
 }
